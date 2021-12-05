@@ -38,7 +38,8 @@ stdenv.mkDerivation rec {
 
   postFixup = ''
     # Rename binary, but don't wrap or alias to regular `dosbox`, as this is not a general purpose
-    # dosbox package, and we don't want to use it by default.
+    # dosbox package, and we don't want to use it by default. We only want to specifically use it
+    # Grid Cartographer
     mv $out/bin/dosbox $out/bin/${pname}
     mv $out/share/man/man1/dosbox.1.gz $out/share/man/man1/${pname}.1.gz
   '';
