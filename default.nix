@@ -14,7 +14,7 @@
   modules = import ./modules; # NixOS modules
   overlays = import ./overlays; # nixpkgs overlays
 
+  bstone = pkgs.callPackage ./pkgs/bstone { };
+
   dosbox-gridc = pkgs.callPackage ./pkgs/dosbox-gridc { };
-  # some-qt5-package = pkgs.libsForQt5.callPackage ./pkgs/some-qt5-package { };
-  # ...
 }
