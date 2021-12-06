@@ -47,10 +47,11 @@ stdenv.mkDerivation rec {
   enableParallelBuilding = true;
 
   meta = with lib; {
+    broken = true; # Don't run this in CI for now
     homepage = "http://www.dosbox.com/";
     description = "Port of DOSBox with Game Link features for Grid Cartographer";
     platforms = platforms.unix;
-    maintainers = with maintainers; [ romatthe ];
+    maintainers = with maintainers; [ ];
     license = licenses.gpl2;
   };
 }
