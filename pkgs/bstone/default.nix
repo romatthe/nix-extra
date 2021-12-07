@@ -40,12 +40,6 @@ in
 
     buildInputs = [ cmake makeWrapper SDL2fix  ];
 
-    cmakeFlags = [ 
-      #"DCUDA_LIB=/usr/local/cuda/lib64/stubs/libcuda.so"
-      #"DCUDA_TOOLKIT_ROOT_DIR=/usr/local/cuda"
-      #"-DSDL2_DIR=${SDL2}/lib"
-    ];
-
     desktopAog = makeDesktopItem {
       name = "bstone-aog";
       exec = "bstone-aog";
