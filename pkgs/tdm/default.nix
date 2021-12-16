@@ -53,48 +53,48 @@ in stdenv.mkDerivation {
   installPhase = ''
     ls -lah
     mkdir -p $out/bin
-    mv thedarkmod.x64 $out/bin/tdm
-    mv tdm-updater $out/bin
+    mv thedarkmod.x64 $out/bin/the-dark-mod
   '';
 
   # why oh why can it find ld but not strip?
-  postPatch = ''
-    # This adds math.h needed for math::floor
-    sed -i 's|#include "Util.h"|#include "Util.h"\n#include <math.h>|' tdm_update/ConsoleUpdater.cpp
-  '';
+  # postPatch = ''
+  #   # This adds math.h needed for math::floor
+  #   sed -i 's|#include "Util.h"|#include "Util.h"\n#include <math.h>|' tdm_update/ConsoleUpdater.cpp
+  # '';
 
-  #   installPhase = ''
-  #     runHook preInstall
-  #     install -Dm644 ${desktop}/share/applications/${pname}.desktop $out/share/applications/${pname}.desktop
-  #     substituteInPlace $out/share/applications/${pname}.desktop --subst-var out
-  #     install -Dm755 thedarkmod.x64 $out/share/libexec/tdm
-  #     # The package doesn't install assets, these get installed by running tdm_update.linux
-  #     # Provide a script that runs tdm_update.linux on first launch
-  #     install -Dm755 <(cat <<'EOF'
-  # #!/bin/sh
-  # set -e
-  # DIR="$HOME/.local/share/tdm"
-  # mkdir -p "$DIR"
-  # cd "$DIR"
-  # exec "PKGDIR/share/libexec/tdm_update.linux" --noselfupdate
-  # EOF
-  #     ) $out/bin/tdm_update
-  #     install -Dm755 <(cat <<'EOF'
-  # #!/bin/sh
-  # set -e
-  # DIR="$HOME/.local/share/tdm"
-  # if [ ! -d "$DIR" ]; then
-  #   echo "Please run tdm_update to (re)download game data"
-  # else
-  #   cd "$DIR"
-  #   exec "PKGDIR/share/libexec/tdm"
-  # fi
-  # EOF
-  #     ) $out/bin/tdm
-  #     sed -i "s!PKGDIR!$out!g" $out/bin/tdm_update
-  #     sed -i "s!PKGDIR!$out!g" $out/bin/tdm
-  #     runHook postInstall
-  #   '';
+    installPhase = ''
+      runHook preInstall
+      #install -Dm644 ${desktop}/share/applications/${pname}.desktop $out/share/applications/${pname}.desktop
+      #substituteInPlace $out/share/applications/${pname}.desktop --subst-var out
+      #install -Dm755 thedarkmod.x64 $out/share/libexec/tdm
+      # The package doesn't install assets, these get installed by running tdm_update.linux
+      # Provide a script that runs tdm_update.linux on first launch
+      zenity --info --no-wrap --text="R.E.L.I.V.E. can't find the install directory of Abe's Exoddus.\nPlease select the folder containing the .lvl files."
+      install -Dm755 <(cat <<'EOF'
+  #!/bin/sh
+  set -e
+  DIR="$HOME/.local/share/tdm"
+  mkdir -p "$DIR"
+  cd "$DIR"
+  exec "PKGDIR/share/libexec/tdm_update.linux" --noselfupdate
+  EOF
+      ) $out/bin/tdm_update
+      install -Dm755 <(cat <<'EOF'
+  #!/bin/sh
+  set -e
+  DIR="$HOME/.local/share/tdm"
+  if [ ! -d "$DIR" ]; then
+    echo "Please run tdm_update to (re)download game data"
+  else
+    cd "$DIR"
+    exec "PKGDIR/share/libexec/tdm"
+  fi
+  EOF
+      ) $out/bin/tdm
+      sed -i "s!PKGDIR!$out!g" $out/bin/tdm_update
+      sed -i "s!PKGDIR!$out!g" $out/bin/tdm
+      runHook postInstall
+    '';
 
   #   postInstall = ''
   #     wrapProgram $out/bin/tdm --suffix LD_LIBRARY_PATH : ${lib.makeLibraryPath [ libGL libGLU ]}
