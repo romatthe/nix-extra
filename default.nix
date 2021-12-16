@@ -17,4 +17,6 @@
   bstone = pkgs.callPackage ./pkgs/bstone { };
 
   dosbox-gridc = pkgs.callPackage ./pkgs/dosbox-gridc { };
+
+  tdm = pkgs.callPackage ./pkgs/tdm { };
 }
